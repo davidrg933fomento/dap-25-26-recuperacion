@@ -8,4 +8,4 @@ RUN curl -L -o world-1.0.tar.gz https://ftp.postgresql.org/pub/projects/pgFoundr
 
 FROM postgres:14.23-alpine3.23
 
-COPY --from=etapa1 /descargas/world-1.0/dbsamples-0.1/world/world.sql /docker-entrypoint-initdb.d/01-world.sql
+COPY --from=etapa1 /descargas/world-1.0.tar.gz/dbsamples-0.1/world/world.sql /docker-entrypoint-initdb.d/01-world.sql
