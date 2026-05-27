@@ -1,10 +1,12 @@
 FROM debian:trixie-slim AS etapa1
 
-RUN apt-get update && apt-get install -y curl unzip 
+RUN apt-get update && apt-get install -y curl tar 
 
 WORKDIR /descargas
 
-RUN curl -L -o world-1.0 https://ftp.postgresql.org/pub/projects/pgFoundry/dbsamples/world/world-1.0/world-1.0.tar.gz && tar -x world-1.0.tar.gz && rm world-1.0.tar.gz
+RUN curl -L -o world-1.0 https://ftp.postgresql.org/pub/projects/pgFoundry/dbsamples/world/world-1.0/world-1.0.tar.gz && \
+    tar -xzf world-1.0 && \
+    rm world-1.0
 
 FROM postgres:14.23-alpine3.23
 
