@@ -1,0 +1,30 @@
+name: 4. GitHub Actions - Construir y Empujar a Docker Hub
+
+on:
+  workflow_dispatch: # Esto habilita el botón "Run workflow" en la interfaz web de GitHub
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Obtener el código del repositorio
+      - name: Paso 1 - Obtener el codigo del repositorio
+        uses: actions/checkout@v4
+
+      # Paso previo obligatorio: Iniciar sesión en Docker Hub de forma segura usando los secrets de GitHub
+      - name: Iniciar sesion en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Paso 3 y 4 - Construir y empujar imagen personalizada de PostgreSQL
+      - name: Paso 3 y 4 - Construir y empujar imagen personalizada de PostgreSQL
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          # Usará tu usuario de los secrets para ponerle el tag correcto a la imagen
+          tags: ${{ secrets.DOCKER_USER }}/postgresql-custom:latest
